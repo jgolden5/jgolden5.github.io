@@ -9,6 +9,10 @@ a {
   color: #004477;
 }
 
+body {
+  background: linear-gradient(0deg, orange, purple);
+}
+
 .navbar {
   position: fixed;        /* stays at the top */
   top: 0;
