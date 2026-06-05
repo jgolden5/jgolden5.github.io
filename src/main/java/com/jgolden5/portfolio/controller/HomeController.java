@@ -1,14 +1,17 @@
 package com.jgolden5.portfolio.controller;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Controller
 public class HomeController {
 
   @GetMapping("/")
-  public String home() {
-    return "Portfolio spring boot server is running!";
+  public String home(Model model) {
+    model.addAttribute("message", "Portfolio API Hub is running!");
+    return "home";  // maps to home.html
   }
 
 }
+
