@@ -1,32 +1,97 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org" lang="en">
+<html lang="en">
 <head>
-  <title>Portfolio</title>
-  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jonathan Gurr — Portfolio</title>
+
+  <link rel="stylesheet" href="/css/style.css"></link>
 </head>
+
 <body>
-  <header class="navbar">
-  <div class="name">Jonathan Gurr</div>
+
   <nav>
-    <ul class="nav-links">
-    <li><a th:href="@{/html/about.html}">About</a></li>
-    <li><a th:href="@{/html/projects.html}">Projects</a></li>
-    <li><a th:href="@{/html/blog/index.html}">Blog</a></li>
-    </ul>
+  <ul>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#education">Education</a></li>
+  </ul>
   </nav>
-  <div class="contact-icons">
-    <span class="logo">Connect:</span>
-    <a href="https://github.com/jgolden5" target="_blank">
-    <img th:src="@{/images/icons/github.svg}" alt="Github">
-    </a>
-    <a href="https://linkedin.com/in/jonathan-gurr" target="_blank">
-    <img th:src="@{/images/icons/linkedin.svg}" alt="LinkedIn">
-    </a>
-    <a href="mailto:jgolden5.tech@gmail.com">
-    <img th:src="@{/images/icons/email.svg}" alt="Email">
-    </a>
+
+  <section class="hero">
+  <h1>Jonathan Gurr</h1>
+  <p>Software Engineer • Java • Spring Boot • Web Development</p>
+  </section>
+
+  <section id="experience">
+  <h2>Experience</h2>
+
+  <div class="card">
+    <h3>Software Engineer — Startup A</h3>
+    <p>2023–2024</p>
+    <ul>
+    <li>Built scalable backend services using Spring Boot and Gradle.</li>
+    <li>Designed REST APIs powering customer‑facing features.</li>
+    <li>Improved system reliability and reduced error rates by 30%.</li>
+    </ul>
   </div>
-  </header>
-  <img class="full-height" th:src="@{/images/profile_pic_of_me.jpg}" />
+
+  <div class="card">
+    <h3>Software Engineer — Startup B</h3>
+    <p>2021–2023</p>
+    <ul>
+    <li>Developed full‑stack features using Java, HTML/Thymeleaf, and JS.</li>
+    <li>Led migration from monolithic architecture to modular services.</li>
+    <li>Implemented CI/CD pipelines and automated testing workflows.</li>
+    </ul>
+  </div>
+  </section>
+
+  <section id="projects">
+  <h2>Projects</h2>
+
+  <div class="card project-card">
+    <h3>Portfolio API Hub</h3>
+    <p>A Spring Boot–powered hub exposing APIs for all personal projects.</p>
+    <ul>
+    <li>Dynamic project listing</li>
+    <li>REST endpoints for metadata</li>
+    <li>Deployed on Fly.io</li>
+    </ul>
+  </div>
+
+  <div class="card project-card">
+    <h3>Task Tracker App</h3>
+    <p>Full‑stack async task management tool for multi‑team workflows.</p>
+    <ul>
+    <li>Java backend with JWT auth</li>
+    <li>React frontend</li>
+    <li>Real‑time updates with WebSockets</li>
+    </ul>
+  </div>
+  </section>
+
+  <section id="education">
+  <h2>Education & Credentials</h2>
+
+  <div class="card">
+    <h3>Bachelor’s Degree (In Progress)</h3>
+    <p>Expected Graduation: 2027</p>
+  </div>
+
+  <div class="card">
+    <h3>Certifications</h3>
+    <ul>
+    <li>Java Programming Certificate</li>
+    <li>Spring Boot Fundamentals</li>
+    <li>Web Development Foundations</li>
+    </ul>
+  </div>
+  </section>
+
+  <footer>
+  © 2026 Jonathan Gurr — All Rights Reserved
+  </footer>
+
 </body>
 </html>
