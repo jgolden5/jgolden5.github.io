@@ -1,0 +1,82 @@
+%%{init: {"theme":"base","flowchart":{"curve":"basis","htmlLabels":true,"nodeSpacing":25,"rankSpacing":40},"themeVariables":{"fontFamily":"Inter, Helvetica, Arial, sans-serif","fontSize":"14px","lineColor":"#94a3b8","clusterBkg":"#f8fafc","clusterBorder":"#cbd5e1"}}}%%
+flowchart LR
+  %% ---------- Setup column (stacked, one per concern) ----------
+  subgraph Setups["One-time setup"]
+    direction TB
+
+    subgraph DomainSetup["Domain and HTTPS setup"]
+      direction LR
+      M1[Point DNS<br/>at server] --> M2[Add domain<br/>in Dokploy] --> M3[Let's Encrypt<br/>certificate]
+    end
+
+    subgraph ServerSetup["Server setup"]
+      direction LR
+      S1[Provision VPS] --> S2[Install Docker<br/>and Dokploy] --> S3[Open ports<br/>80, 443, 3000]
+    end
+
+    subgraph BuildSetup["Build setup"]
+      direction LR
+      B1["User picks a build method<br/>(Dockerfile in our case)"] --> B2[Write Dockerfile] --> B3[Set env vars<br/>and build args]
+    end
+
+    subgraph DokploySetup["Dokploy setup"]
+      direction LR
+      K1[User connects Dokploy<br/>to GitHub repo] --> K2[Choose tracked<br/>branch] --> K3[Enable<br/>auto-deploy]
+    end
+
+    subgraph GHSetup["GitHub setup"]
+      direction LR
+      G1[Create repo] --> G2[Authorize Dokploy<br/>GitHub App / deploy key] --> G3[Dokploy registers<br/>webhook URL with GitHub]
+    end
+
+    subgraph GitSetup["Local Git setup"]
+      direction LR
+      L1[Install Git] --> L2[git init] --> L3[Add GitHub<br/>origin remote]
+    end
+  end
+
+  %% ---------- Pipeline ----------
+  subgraph Pipeline["On every push"]
+    direction TB
+    A[Local Git commits] --> B[User pushes code<br/>to GitHub]
+    B --> C[GitHub sends webhook<br/>HTTP POST to Dokploy]
+    C --> D[Dokploy receives notification<br/>and checks the branch matches]
+    D --> E[Dokploy clones repo and<br/>builds Docker image]
+    E --> F[Dokploy starts new container<br/>from image]
+    F --> G[Traefik routes domain traffic<br/>to new container]
+    G --> H[Old container is stopped]
+  end
+
+  %% ---------- Enables ----------
+  L3 -.->|enables| A
+  G3 -.->|enables| C
+  K3 -.->|enables| D
+  B3 -.->|enables| E
+  S3 -.->|enables| F
+  M3 -.->|enables| G
+
+  %% ---------- Styling ----------
+  classDef git fill:#fff7ed,stroke:#f97316,color:#7c2d12,rx:8,ry:8
+  classDef srv fill:#f1f5f9,stroke:#64748b,color:#1e293b,rx:8,ry:8
+  classDef gh fill:#f5f3ff,stroke:#8b5cf6,color:#3b0764,rx:8,ry:8
+  classDef dok fill:#eff6ff,stroke:#3b82f6,color:#1e3a8a,rx:8,ry:8
+  classDef bld fill:#fefce8,stroke:#eab308,color:#713f12,rx:8,ry:8
+  classDef dom fill:#ecfeff,stroke:#06b6d4,color:#164e63,rx:8,ry:8
+  classDef run fill:#f0fdf4,stroke:#22c55e,color:#14532d,rx:8,ry:8
+  class L1,L2,L3 git
+  class S1,S2,S3 srv
+  class G1,G2,G3 gh
+  class K1,K2,K3 dok
+  class B1,B2,B3 bld
+  class M1,M2,M3 dom
+  class A,B,C,D,E,F,G,H run
+
+  style Setups fill:#ffffff,stroke:#94a3b8,stroke-dasharray:6 4
+  style Pipeline fill:#ffffff,stroke:#22c55e,stroke-width:2px
+  style GitSetup fill:#fff7ed,stroke:#f97316
+  style ServerSetup fill:#f1f5f9,stroke:#64748b
+  style GHSetup fill:#f5f3ff,stroke:#8b5cf6
+  style DokploySetup fill:#eff6ff,stroke:#3b82f6
+  style BuildSetup fill:#fefce8,stroke:#eab308
+  style DomainSetup fill:#ecfeff,stroke:#06b6d4
+  linkStyle default stroke:#94a3b8,stroke-width:1.5px
